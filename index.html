@@ -1,0 +1,106 @@
+<html>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <style>
+    .filterable {
+      margin-top: 15px
+    }
+
+    .filterable .panel-heading .pull-right {
+      margin-top: -20px
+    }
+
+    .filterable .filters input[disabled] {
+      background-color: transparent;
+      border: none;
+      cursor: auto;
+      box-shadow: none;
+      padding: 0;
+      height: auto
+    }
+
+    .filterable .filters input[disabled]::-webkit-input-placeholder {
+      color: #333
+    }
+
+    .filterable .filters input[disabled]::-moz-placeholder {
+      color: #333
+    }
+
+    .filterable .filters input[disabled]:-ms-input-placeholder {
+      color: #333
+    }
+
+    table th,
+    table td {
+      padding: 4px 1vh
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    .filters input {
+      border: none;
+      outline: none;
+    }
+
+    .filterable table {
+      width: 100%;
+    }
+  </style>
+  <div class="panel panel-primary filterable">
+    <table class="table">
+      <thead>
+        <th>#</th>
+        <th>First Name</th>
+        <th>Last name</th>
+        <th>Usename</th>
+        <th>Phone</th>
+      </thead>
+      <thead>
+        <tr class="filters">
+          <th><input type="text" placeholder="#"></th>
+          <th><input type="text" placeholder="First Name"></th>
+          <th><input type="text" placeholder="Last Name"></th>
+          <th><input type="text" placeholder="Username"></th>
+          <th><input type="text" placeholder="PhoneNo"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>10</td>
+          <td>Tom</td>
+          <td>Amar</td>
+          <td>@TAmar</td>
+          <td>306-456-7890</td>
+        </tr>
+        <tr>
+          <td>20</td>
+          <td>Dick</td>
+          <td>Akbar</td>
+          <td>@DAkbar</td>
+          <td>456-456-7890</td>
+        </tr>
+        <tr>
+          <td>30</td>
+          <td>Harry</td>
+          <td>Anthony</td>
+          <td>@HAnthony</td>
+          <td>526-456-7890</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>No.of Rows : <span id="rowcount"></span></p>
+  </div>
+  <script>function checkval() { 1 == $("tbody tr:visible").length && "No result found" == $("tbody tr:visible td").html() ? $("#rowcount").html("0") : $("#rowcount").html($("tr:visible").length - 1) } $(document).ready(function () { $("#rowcount").html($(".filterable tr").length - 1), $(".filterable .btn-filter").click(function () { var t = $(this).parents(".filterable"), e = t.find(".filters input"), l = t.find(".table tbody"); 1 == e.prop("disabled") ? (e.prop("disabled", !1), e.first().focus()) : (e.val("").prop("disabled", !0), l.find(".no-result").remove(), l.find("tr").show()), $("#rowcount").html($(".filterable tr").length - 1) }), $(".filterable .filters input").keyup(function (t) { if ("9" != (t.keyCode || t.which)) { var e = $(this), l = e.val().toLowerCase(), n = e.parents(".filterable"), i = n.find(".filters th").index(e.parents("th")), r = n.find(".table"), o = r.find("tbody tr"), d = o.filter(function () { return -1 === $(this).find("td").eq(i).text().toLowerCase().indexOf(l) }); r.find("tbody .no-result").remove(), o.show(), d.hide(), d.length === o.length && r.find("tbody").prepend($('<tr class="no-result text-center"><td colspan="' + r.find(".filters th").length + '">No result found</td></tr>')) } $("#rowcount").html($("tr:visible").length - 1), checkval() }) });</script>
+</body>
+
+</html>
